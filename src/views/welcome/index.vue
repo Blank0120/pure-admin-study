@@ -1,7 +1,10 @@
-<script setup lang="ts">
+<script lang="ts">
 // defineOptions({
 //   name: "Welcome"
 // });
+export default {
+  name: "Welcome"
+}
 </script>
 
 <template>
