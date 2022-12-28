@@ -3,8 +3,8 @@
 export default {
   path: "/",
   name: "Home",
-//   component: Layout,
-  redirect: "/welcome",
+  // component: Layout,
+  // redirect: "/welcome",
   meta: {
     icon: "homeFilled",
     title: "首页",

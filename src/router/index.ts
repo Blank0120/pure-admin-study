@@ -4,6 +4,8 @@ import {
 	createWebHashHistory,
 } from "vue-router";
 
+import remainingRouter from "./modules/remaining";
+
 import type { RouteRecordRaw } from "vue-router";
 
 /** 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件，除了 remaining.ts 文件
@@ -11,7 +13,7 @@ import type { RouteRecordRaw } from "vue-router";
  * 如何排除文件请看：https://cn.vitejs.dev/guide/features.html#negative-patterns
  */
 const modules: Record<string, any> = import.meta.glob(
-	["./modules/**/*.ts"],
+	["./modules/**/*.ts", "!./modules/**/remaining.ts"],
 	{
 		eager: true
 	}
@@ -27,7 +29,7 @@ Object.keys(modules).forEach(key => {
 /** 创建路由实例 */
 export const router: Router = createRouter({
 	history: createWebHashHistory(),
-	routes
+	routes: [...routes, ...remainingRouter]
 });
 
 export default router;
