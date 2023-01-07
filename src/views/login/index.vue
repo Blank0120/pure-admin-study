@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useUserStoreHook } from '@/store/modules/user';
 import type { FormInstance } from 'element-plus';
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 
@@ -18,7 +19,13 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log('表单格式正确');
+      useUserStoreHook()
+        .loginByUsername({ username: ruleForm.username, password: "admin123" })
+        .then(res => {
+          if (res.success) {
+            console.log('登录成功');
+          }
+        });
     } else {
       loading.value = false;
       return fields;
