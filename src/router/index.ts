@@ -1,3 +1,4 @@
+import NProgress from "@/utils/progress";
 import {
 	Router,
 	createRouter,
@@ -30,6 +31,31 @@ Object.keys(modules).forEach(key => {
 export const router: Router = createRouter({
 	history: createWebHashHistory(),
 	routes: [...routes, ...remainingRouter]
+});
+
+/** 路由白名单 */
+const whiteList = ["/login"];
+
+router.beforeEach((to, _from, next) => {
+	NProgress.start();
+	const userInfo = "";
+	// const userInfo = storageSession().getItem<DataInfo<number>>(sessionKey);
+
+	if (userInfo) {
+		console.log("用户一登陆");
+		NProgress.done();
+		next();
+	} else {
+		if (whiteList.indexOf(to.path) !== -1) {
+			next();
+		} else {
+			next({ path: "/login" });
+		}
+	}
+});
+
+router.afterEach(() => {
+	NProgress.done();
 });
 
 export default router;

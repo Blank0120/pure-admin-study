@@ -12,11 +12,13 @@
     "@types/node": "^18.11.17",
     "axios": "^1.2.2",
     "element-plus": "^2.2.27",
+    "nprogress": "^0.2.0",
     "pinia": "^2.0.28",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@types/nprogress": "^0.2.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "postcss": "^8.4.20",
     "sass": "^1.57.1",
