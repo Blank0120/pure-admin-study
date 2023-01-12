@@ -1,9 +1,13 @@
 <script lang="ts" setup>
 import { useUserStoreHook } from '@/store/modules/user';
+import { useRouter } from "vue-router";
 import type { FormInstance } from 'element-plus';
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 
 import { loginRules } from "./utils/rule";
+import { message } from '@/utils/message';
+
+const router = useRouter();
 
 const loading = ref(false);
 const ruleFormRef = ref<FormInstance>();
@@ -24,6 +28,8 @@ const onLogin = async (formEl: FormInstance | undefined) => {
         .then(res => {
           if (res.success) {
             console.log('登录成功');
+            router.push("/");
+            message("登录成功", { type: "success" });
           }
         });
     } else {
