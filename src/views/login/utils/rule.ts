@@ -17,7 +17,6 @@ const loginRules = reactive(<FormRules>{
             new Error("密码格式应为8-18位数字、字母、符号的任意两种组合")
           );
         } else {
-          console.log('loginRules.password.validator.callback.else');
           callback();
         }
       },

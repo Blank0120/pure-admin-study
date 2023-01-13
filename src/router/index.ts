@@ -8,6 +8,7 @@ import {
 import remainingRouter from "./modules/remaining";
 
 import type { RouteRecordRaw } from "vue-router";
+import { sessionKey } from "@/utils/auth";
 
 /** 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件，除了 remaining.ts 文件
  * 如何匹配所有文件请看：https://github.com/mrmlnc/fast-glob#basic-syntax
@@ -38,19 +39,13 @@ const whiteList = ["/login"];
 
 router.beforeEach((to, _from, next) => {
 	NProgress.start();
-	const userInfo = "";
-	// const userInfo = storageSession().getItem<DataInfo<number>>(sessionKey);
+	const userInfo = sessionStorage.getItem(sessionKey);
 
-	if (userInfo) {
-		console.log("用户一登陆");
-		NProgress.done();
+	if (userInfo || whiteList.indexOf(to.path) !== -1) {
 		next();
 	} else {
-		if (whiteList.indexOf(to.path) !== -1) {
-			next();
-		} else {
-			next({ path: "/login" });
-		}
+		console.log(`有人试图从${_from.path}未登录访问${to.path}`);
+		next({ path: "/login" });
 	}
 });
 

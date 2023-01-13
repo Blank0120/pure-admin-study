@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import { store } from "@/store";
 
 import Axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { removeToken, setToken } from "@/utils/auth";
+import router from "@/router";
 
 type RequestMethods = "get" | "delete" | "head" | "post" | "put" | "patch";
 
@@ -67,6 +69,7 @@ export const useUserStore = defineStore({
         getLogin("post", "/login", { data })
           .then(data => {
             if (data) {
+              setToken(data.data);
               resolve(data);
             }
           })
@@ -75,7 +78,13 @@ export const useUserStore = defineStore({
           });
       });
     },
-
+    /** 前端登出（不调用接口） */
+    logOut() {
+      this.username = "";
+      this.roles = [];
+      removeToken();
+      router.push("/login");
+    },
   }
 });
 
