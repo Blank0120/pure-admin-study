@@ -13,7 +13,7 @@ export default [
   },
 //   {
 //     path: "/redirect",
-//     // component: Layout,
+//     component: Layout,
 //     meta: {
 //       icon: "homeFilled",
 //       title: "首页",
