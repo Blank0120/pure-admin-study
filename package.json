@@ -20,6 +20,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@iconify/vue": "^4.0.2",
     "@types/nprogress": "^0.2.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "postcss": "^8.4.20",
