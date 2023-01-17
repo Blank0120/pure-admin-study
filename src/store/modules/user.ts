@@ -4,6 +4,7 @@ import { store } from "@/store";
 import Axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { removeToken, setToken } from "@/utils/auth";
 import router from "@/router";
+import { getLoginHook } from "@/api";
 
 type RequestMethods = "get" | "delete" | "head" | "post" | "put" | "patch";
 
@@ -30,22 +31,6 @@ type userType = {
 
 const axiosInstance: AxiosInstance = Axios.create();
 
-const getLogin = (
-  method: RequestMethods,
-  url: string,
-  param?: AxiosRequestConfig,
-) => new Promise<UserResult>((resolve, reject) => {
-  axiosInstance.request({
-    method,
-    url,
-    ...param
-  }).then((response) => {
-    resolve(response.data as UserResult)
-  }).catch((error) => {
-    reject(error)
-  })
-});
-
 export const useUserStore = defineStore({
   id: "pure-user",
   state: (): userType => ({
@@ -66,7 +51,7 @@ export const useUserStore = defineStore({
     /** 登入 */
     async loginByUsername(data: any) {
       return new Promise<UserResult>((resolve, reject) => {
-        getLogin("post", "/login", { data })
+        getLoginHook({data})
           .then(data => {
             if (data) {
               setToken(data.data);
