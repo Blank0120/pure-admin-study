@@ -3,6 +3,7 @@ import {
 	Router,
 	createRouter,
 	createWebHashHistory,
+	RouteComponent,
 } from "vue-router";
 
 import remainingRouter from "./modules/remaining";
@@ -27,6 +28,11 @@ const routes: RouteRecordRaw[] = [];
 Object.keys(modules).forEach(key => {
 	routes.push(modules[key].default);
 });
+
+/** 用于渲染菜单，保持原始层级 */
+export const constantMenus: Array<RouteComponent> = (routes as Array<any>).concat(
+	...remainingRouter
+);
 
 /** 创建路由实例 */
 export const router: Router = createRouter({

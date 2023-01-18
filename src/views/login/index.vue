@@ -6,6 +6,7 @@ import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 
 import { loginRules } from "./utils/rule";
 import { message } from '@/utils/message';
+import { initRouter } from '@/router/utils';
 
 const router = useRouter();
 
@@ -27,9 +28,11 @@ const onLogin = async (formEl: FormInstance | undefined) => {
         .loginByUsername({ username: ruleForm.username, password: "admin123" })
         .then(res => {
           if (res.success) {
-            console.log('登录成功');
-            router.push("/");
-            message("登录成功", { type: "success" });
+            // 获取后端路由
+            initRouter().then(() => {
+              router.push("/");
+              message("登录成功", { type: "success" });
+            });
           }
         });
     } else {
@@ -57,29 +60,29 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="login-form">
-      <h2> Login </h2>
-      <el-form ref="ruleFormRef" :model="ruleForm" :rules="loginRules" size="large">
-        <el-form-item :rules="[
-  {
-    required: true,
-    message: '请输入账号',
-    trigger: 'blur'
-  }
-]" prop="username">
-          <el-input clearable v-model="ruleForm.username" placeholder="账号" />
-        </el-form-item>
+  <div class="login-form">
+    <h2> Login </h2>
+    <el-form ref="ruleFormRef" :model="ruleForm" :rules="loginRules" size="large">
+      <el-form-item :rules="[
+        {
+          required: true,
+          message: '请输入账号',
+          trigger: 'blur'
+        }
+      ]" prop="username">
+        <el-input clearable v-model="ruleForm.username" placeholder="账号" />
+      </el-form-item>
 
-        <el-form-item prop="password">
-          <el-input clearable show-password v-model="ruleForm.password" placeholder="密码" />
-        </el-form-item>
+      <el-form-item prop="password">
+        <el-input clearable show-password v-model="ruleForm.password" placeholder="密码" />
+      </el-form-item>
 
-        <el-button class="w-full mt-10" size="default" type="primary" :loading="loading" @click="onLogin(ruleFormRef)">
-          登录
-        </el-button>
+      <el-button class="w-full mt-10" size="default" type="primary" :loading="loading" @click="onLogin(ruleFormRef)">
+        登录
+      </el-button>
 
-      </el-form>
-    </div>
+    </el-form>
+  </div>
 </template>
 
 <style scoped>
