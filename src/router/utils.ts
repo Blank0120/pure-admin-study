@@ -12,7 +12,7 @@ function handleAsyncRoutes(routeList) {
 function initRouter() {
 	return new Promise(resolve => {
 		getAsyncRoutesHook().then(({ data }) => {
-			handleAsyncRoutes(structuredClone(data));
+			handleAsyncRoutes(structuredClone(data.data));
 			resolve(router);
 		});
 	});
