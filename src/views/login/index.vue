@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
 .login-form h2 {
   text-transform: uppercase;
   margin: 15px 0;
-  color: grey;
+  color: gray;
   font: bold 200% Consolas, Monaco, monospace;
 }
 </style>
