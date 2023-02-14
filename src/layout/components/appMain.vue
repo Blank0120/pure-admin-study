@@ -15,11 +15,11 @@ const transitionMain = defineComponent({
       {
         name:
           transitions.value(this.route) &&
-          this.route.meta.transition.enterTransition
+            this.route.meta.transition.enterTransition
             ? "pure-classes-transition"
             : (transitions.value(this.route) &&
-                this.route.meta.transition.name) ||
-              "fade-transform",
+              this.route.meta.transition.name) ||
+            "fade-transform",
         enterActiveClass:
           transitions.value(this.route) &&
           `animate__animated ${this.route.meta.transition.enterTransition}`,
@@ -50,10 +50,10 @@ const transitionMain = defineComponent({
       <template #default="{ Component, route }">
         <div>
           <transitionMain :route="route">
-            <component
-              :is="Component"
-              :key="route.fullPath"
-            />
+            <!-- TODO fix warning with div -->
+            <div>
+              <component :is="Component" :key="route.fullPath" />
+            </div>
           </transitionMain>
         </div>
       </template>

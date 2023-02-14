@@ -16,7 +16,7 @@
       "element-plus/global",
       "node"
     ],
-    "baseurl": ".",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },

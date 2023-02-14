@@ -11,7 +11,7 @@ import remainingRouter from "./modules/remaining";
 import type { RouteRecordRaw } from "vue-router";
 import { sessionKey } from "@/utils/auth";
 import { usePermissionStoreHook } from "@/store/modules/permission";
-import { initRouter } from "./utils";
+import { ascending, buildHierarchyTree, formatFlatteningRoutes, formatTwoStageRoutes, initRouter } from "./utils";
 
 /** 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件，除了 remaining.ts 文件
  * 如何匹配所有文件请看：https://github.com/mrmlnc/fast-glob#basic-syntax
@@ -31,6 +31,11 @@ Object.keys(modules).forEach(key => {
 	routes.push(modules[key].default);
 });
 
+/** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
+export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
+	formatFlatteningRoutes(buildHierarchyTree(ascending(routes)))
+);
+
 /** 用于渲染菜单，保持原始层级 */
 export const constantMenus: Array<RouteComponent> = (routes as Array<any>).concat(
 	...remainingRouter
@@ -39,7 +44,7 @@ export const constantMenus: Array<RouteComponent> = (routes as Array<any>).conca
 /** 创建路由实例 */
 export const router: Router = createRouter({
 	history: createWebHashHistory(),
-	routes: [...routes, ...remainingRouter]
+	routes: constantRoutes.concat(...remainingRouter)
 });
 
 /** 路由白名单 */
